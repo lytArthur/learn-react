@@ -1,0 +1,24 @@
+yarn 和 npm
+
+
+
+yarn init                       npm init
+yarn                            npm install
+yarn global add xx@x.xx         npm install xx@x.xx  -g
+yarn add xx@x.xx                npm install xx@x.xx
+yarn add xxx@x.xx --dev         npm install xx@x.xx --save-dev
+yarn remove   xxx               npm uninstall xxx  --save-dev
+yarn run xxx                    npm run xxx
+
+
+webpack 的对文件的处理
+html： html-webpack-plugin 
+脚本：bable + bable-preset-react
+css: css-loader + sass-loader
+图片/字体： url-loader/file-loader 
+
+
+webpack-dev-server
+更新代码自动刷新，路劲转发
+yarn add webpack-dev-server@2.9.7 --dev
+解决多版本共存的问题
