@@ -22,3 +22,8 @@ webpack-dev-server
 更新代码自动刷新，路劲转发
 yarn add webpack-dev-server@2.9.7 --dev
 解决多版本共存的问题
+
+
+虚拟DOM：对DOM进行模拟，把jsx转化成虚拟的DOM存在内存中，内存的读取速度比操作DOM快的多，如果用户做了相关的DOM操作，虚拟DOM会对前后的数据进行对比
+，如果有差异，在改变DOM，没有变化就不会发生DOM操作，减少DOM操作，
+
