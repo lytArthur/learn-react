@@ -2,44 +2,71 @@
 
 import React from 'react';
 import ReactDOM from 'react-dom';
+import { BrowserRouter as Router, Route, Link, Switch } from 'react-router-dom'
 
 
-//1：子组件想父组件传递数据
-
-class Father extends React.Component{
+class A extends React.Component{
   constructor(props){
-    super(props);
-    this.state = {
-      color: '#aaa',
-      fontSzie: '30px'
-    }
+    super(props)
   }
   render(){
-    return(
-      <div>Father</div>
+    return (
+      <div>
+          <Switch> 
+               <Route exact path={`${this.props.match.path}`} render={()=>{
+                 return <div>当前组件是组件A本身，没有参数</div>
+               }} />
+                <Route path={`${this.props.match.path}/sub`} render={(route) => {
+                    return <div>当前组件sub</div>
+                }} />
+                <Route path={`${this.props.match.path}/:id`} render={(route) => {
+                    return <div>当前组件: 带参数的A本身，参数为：{route.match.params.id}</div>
+                }} />
+          </Switch>  
+      </div>
     )
   }
 }
 
 
-class Child extends React.Component{
+class B extends React.Component{
   constructor(props){
-    super(props);
-    this.state = {
-      color: 'red',
-      fontSzie: '50px'
-    }
+    super(props)
   }
   render(){
-    return(
-      <div></div>
+    return (
+      <div>组件B</div>
+    )
+  }
+}
+
+class Wrapper extends React.Component{
+  constructor(props){
+    super(props);
+  }
+  render(){
+    return (
+       <div>
+         <Link to="/a">this is component A</Link>
+         <br />
+         <Link to="/a/123">this is component A  有参数</Link>
+         <br />
+         <Link to="/a/sub">this is component sub</Link>
+         <br />
+         <Link to="/b">this is component B</Link>
+         <br />
+         {this.props.children}
+       </div>
     )
   }
 }
 
 ReactDOM.render(
-  <div>
-     <Father />
-  </div>,
-  document.getElementById("app")
+  <Router>
+    <Wrapper>
+        <Route path="/a" component={A}/>
+        <Route path="/b" component={B}/>
+    </Wrapper>
+</Router>,
+document.getElementById('app')
 )

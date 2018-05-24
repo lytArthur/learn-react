@@ -27,3 +27,35 @@ yarn add webpack-dev-server@2.9.7 --dev
 虚拟DOM：对DOM进行模拟，把jsx转化成虚拟的DOM存在内存中，内存的读取速度比操作DOM快的多，如果用户做了相关的DOM操作，虚拟DOM会对前后的数据进行对比
 ，如果有差异，在改变DOM，没有变化就不会发生DOM操作，减少DOM操作，
 
+
+router:原理
+历史，跳转，事件
+页面router
+hash路由(change hash);
+H5路由
+
+
+
+页面路由：window.location.href 
+
+//change the hash
+window.location = "#test";
+//watch the change of hash
+window.onhashchange = function(){
+    console.log("current hash:",window.loaction.hash);
+}
+
+// H5  push a router
+history.pushState("name","title","/path");
+//replace a router
+history.replaceState("name","title","/path");
+
+//watch the back router
+window.onpopState = function(){
+    
+}
+
+
+
+
+
