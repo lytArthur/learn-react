@@ -86,6 +86,12 @@ module.exports = {
     port: '8080',
     historyApiFallback: {
       index: '/dist/index.html'
+  },
+  proxy: {
+    '/manage': {
+      target:'http://admintest.happymmall.com',
+      changeOrigin: true
+    }
   }
   },
 };
