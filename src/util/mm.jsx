@@ -31,6 +31,40 @@ class MUtil {
     doLogin() {
         window.location.href = './login?redirect=' + encodeURIComponent(window.location.pathname);
     }
+    getUrlParam(name) {
+        let queryString = window.location.search.split('?')[1] || '';
+        let reg = new RegExp("(^|&)"+name+"=([^&]*)(&|$)");
+        let result = queryString.match(reg);
+        return result? decodeURIComponent(result[2]) : null;
+    }
+    //错误提示
+    errorTips(errMsg) {
+        alert(errMsg || "出问题了哦！")
+    }
+    setStorage(name, data) {
+        let dataType = typeof data;
+        if(dataType === "object" ){
+            window.localStorage.setItem(name,JSON.stringify(data))
+        }
+        //判断基础类型
+        else if(['string','boolean','number'].indexOf(dataType) >= 0){
+            window.localStorage.setItem(name,data);
+        }
+        else{
+            alert("该类型不能用于本地存储");
+        }
+    }
+    getStorage(name) {
+        let data = window.localStorage.getItem(name);
+        if(data){
+            return JSON.parse(data);
+        }else{
+            return '';
+        }
+    }
+    removeStorage(name) {
+        window.localStorage.removeItem(name);
+    }
 }
 
 export default MUtil  

@@ -1,38 +1,56 @@
-import React from 'react';
+import React    from 'react';
 import './index.scss'
-import MUtil from './../../util/mm.jsx';
+import MUtil    from 'util/mm.jsx';
+import User     from 'service/user-service.jsx';
 
-const _mm = new MUtil();
+const _mm       = new MUtil();
+const _user     = new User();
 
+
+console.log(_user);
 
 class Login extends React.Component{
     constructor(props){
         super(props);
         this.state = {
             username: '',
-            password: ''
+            password: '',
+            redirect: _mm.getUrlParam('redirect') || '/'
         }
     }
+    componentWillMount() {
+        document.title ='登录';
+    }
     onInputChange(e) {
-        let username  = e.target.name,
-            inputValue = e.target.value
+        let inputValue  = e.target.value,
+            inputName   = e.target.name;
         this.setState({
-            [username]: inputValue
-        })
+            [inputName] : inputValue
+        });
+        console.log(this.state.username);
+        console.log(this.state.password);
+    }
+    onInputKeyup(e) {
+        if(e.keyCode ==13){
+            this.onSubmit();
+        }
     }
     onSubmit() {
-        _mm.request({
-            type: 'post',
-            url: '/manage/user/list.do',
-            data: {
-                username: this.state.username,
-                password: this.state.password,
-            }
-        }).then((res) =>{
-
-        },(err) => {
-
-        });
+        let loginInfo = {
+            username: this.state.username,
+            password: this.state.password
+        }
+        let checkResult = _user.checkLoginInfo(loginInfo);
+        if(checkResult.status){
+            _user.login(loginInfo).then((res) =>{
+                _mm.setStorage('userInfo',res);
+                this.props.history.push(this.state.redirect);
+            }, (errMsg) => {
+                _mm.errorTips(errMsg);
+            });
+        }else{
+            _mm.errorTips(checkResult.msg);
+        }
     }
     render(){
         return (
@@ -46,6 +64,7 @@ class Login extends React.Component{
                                             <input type="text" className="form-control" id="exampleInputEmail1" 
                                             name="username"
                                             placeholder="请输入用户名"
+                                            onKeyUp={e=>this.onInputKeyup(e)}
                                             onChange={e => this.onInputChange(e)}
                                              />
                                         </div>
@@ -54,6 +73,7 @@ class Login extends React.Component{
                                             <input type="password" className="form-control" id="exampleInputPassword1"
                                              name="password"                                            
                                              placeholder="请输入密码"
+                                             onKeyUp={e=>this.onInputKeyup(e)}
                                              onChange={e => this.onInputChange(e)}
                                               />
                                         </div>
