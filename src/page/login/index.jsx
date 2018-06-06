@@ -6,9 +6,6 @@ import User     from 'service/user-service.jsx';
 const _mm       = new MUtil();
 const _user     = new User();
 
-
-console.log(_user);
-
 class Login extends React.Component{
     constructor(props){
         super(props);
@@ -27,8 +24,6 @@ class Login extends React.Component{
         this.setState({
             [inputName] : inputValue
         });
-        console.log(this.state.username);
-        console.log(this.state.password);
     }
     onInputKeyup(e) {
         if(e.keyCode ==13){
