@@ -21,7 +21,6 @@ class Home extends React.Component{
     }
     loadCount() {
         _statistic.getHomeCount().then(res => {
-            console.log(res);
             this.setState({
                 userCount      : res.userCount,
                 productCount   : res.productCount,
