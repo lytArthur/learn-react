@@ -17,6 +17,15 @@ class User{
             url: '/user/logout.do',
         });
     }
+    getUserList(pageNum) {
+        return _mm.request({
+            method  : 'POST',
+            url     : '/manage/user/list.do',
+            data    : {
+                  pageNum: pageNum
+            }
+        }); 
+    }
     //检查登陆接口的数据
     checkLoginInfo(loginInfo) {
         let username = $.trim(loginInfo.username);
