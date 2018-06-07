@@ -13,6 +13,14 @@ class Product{
             }
         }); 
     }
+    //变更商品上下架状态
+    setProductStatus(productInfo) {
+        return _mm.request({
+            method  : 'POST',
+            url     : "/manage/product/set_sale_status.do",
+            data    : productInfo
+        }); 
+    }
 }
 
 export default Product;

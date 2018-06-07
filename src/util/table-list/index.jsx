@@ -24,7 +24,7 @@ class TableList extends React.Component{
         )
         let listInfo = (
             <tr>
-                <td colSpan={this.props.tableHeads} className='text-center'>
+                <td colSpan={this.props.tableHeads.length} className='text-center'>
                     {this.state.isFirstLoading ? "正在加载...":"没有找到相应的结果"}
                 </td>
             </tr>
