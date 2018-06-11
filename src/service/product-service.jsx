@@ -30,7 +30,7 @@ class Product{
             data    : productInfo
         }); 
     }
-    //品类相关
+        //品类相关
     getCategoryList(parentCategoryId) {
         return _mm.request({
             method  : 'POST',

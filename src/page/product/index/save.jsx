@@ -1,11 +1,12 @@
 
 
-import   React              from 'react';
-import   {  Link }          from 'react-router-dom';
-import PageTitle            from 'component/page-title/index.jsx';
-import CategorySelector     from 'page/product/index/category-select.jsx';
-import MUtil          from 'util/mm.jsx';
-import Product        from 'service/product-service.jsx';
+import   React               from 'react';
+import   {  Link }           from 'react-router-dom';
+import PageTitle             from 'component/page-title/index.jsx';
+import CategorySelector      from 'page/product/index/category-select.jsx';
+import MUtil                 from 'util/mm.jsx';
+import Product               from 'service/product-service.jsx';
+import AntdFileload          from 'util/fileupload/index.jsx';
 
 const _mm = new MUtil();
 const _product = new Product();
@@ -50,7 +51,7 @@ class ProductSave extends React.Component{
                     <div className="form-group">
                         <label  className="col-md-2 control-label">商品图片</label>
                         <div className="col-md-10">
-                              xxxx
+                        <AntdFileload />
                         </div>
                     </div>
                     <div className="form-group">
