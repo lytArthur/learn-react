@@ -1,63 +1,32 @@
-import   React              from 'react';
-import { Upload, Icon, Modal } from 'antd';
-import  'antd/dist/antd.css'; 
+import  React                  from 'react';
+import  FileUpload             from './react-fileupload.jsx';
 
-class AntdFileload extends React.Component {
+class FileUploader extends React.Component{
     constructor(props){
         super(props);
-        this.state = {
-            previewVisible: false,
-            previewImage: '',
-            fileList: [],
-          };
-        
-    };
-    handlePreview  (file)  {
-        this.setState({
-          previewImage: file.url || file.thumbUrl,
-          previewVisible: true,
-        });
     }
-    handleCancel(file) {
-        this.setState({ 
-            previewVisible: false 
-        });
+    render(){
+        /*set properties*/
+        const options = {
+            baseUrl         : '/manage/product/upload.do',
+            fileFieldName   : 'upload_file',
+            dataType        : 'json',
+            chooseAndUpload : true,
+            uploadSuccess   : (res) => {
+                this.props.OnSuccess(res.data)
+            },
+            uploadError     : (res) => {
+                this.props.OnError(res.message || "上传图片出错了")
+            }
+        }
+        /*Use FileUpload with options*/
+        /*Set two dom with ref*/
+        return (
+            <FileUpload options={options}>
+                <button className='btn-default btn-xs' ref="chooseAndUpload">请选择图片</button>
+            </FileUpload>
+        )	        
     }
-    handlePreview (file) {
-        this.setState({
-            previewImage: file.url || file.thumbUrl,
-            previewVisible: true,
-        });
-    }
-  
-    handleChange ({ fileList }) {
-        this.setState({ fileList })
-    }
-    render() {
-      const { previewVisible, previewImage, fileList } = this.state;
-      const uploadButton = (
-        <div>
-          <Icon type="plus" />
-          <div className="ant-upload-text">上传图片</div>
-        </div>
-      );
-      return (
-        <div className="clearfix">
-          <Upload
-                action="/manage/product/upload.do"
-                listType="picture-card"
-                fileList={fileList}
-                onPreview={(file) => this.handlePreview(file)}
-                onChange={({fileList}) => {this.handleChange({fileList})}}
-          >
-            {fileList.length >= 10 ? null : uploadButton}
-          </Upload>
-           <Modal visible={previewVisible} footer={null} onCancel={this.handleCancel}>
-               <img alt="example" style={{ width: '100%' }} src={previewImage} />
-           </Modal>
-        </div>
-      );
-    }
-  }
+}
 
-  export default AntdFileload
+export default FileUploader
