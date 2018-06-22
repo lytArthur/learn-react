@@ -17,10 +17,17 @@ class ProductSave extends React.Component{
   constructor(props){
     super(props);
     this.state = {
+        name             : '',
+        subtitle         : '',
+        price            : '',
+        stock            : '',
+        detail           : '',
+        status           : '1',
         categoryId       : 0,
         parentCategoryId : 0,
         subImages        : []
     }
+    console.log(this.state.subImages);
   }
   //品类选择变化
   onCategoryChange(categoryId, parentCategoryId){
@@ -46,6 +53,35 @@ class ProductSave extends React.Component{
         subImages : subImages
       });
   }
+  onEditorChange(value) {
+      console.log(value);
+      this.setState({
+          detail: value
+      });
+  }
+  onValueChange(e) {
+      let name = e.target.name,
+          value = e.target.value;
+      this.setState({
+          [name] : value
+      });
+  }
+  dealSubImage() {
+      return this.state.subImages.map((v, i) => v.uri).join(",");
+  }
+  onSubimt() {
+    let product = {
+        categoryId          : this.state.secondCategoryId || this.state.firstCategoryId || 0,
+        name                : this.state.name,
+        subtitle            : this.state.subtitle,
+        subImages           : this.dealSubImage(),
+        detail              : this.state.detail,
+        price               : this.state.price,
+        stock               : this.state.stock,
+        status              : this.state.status || 1 // 状态为正常
+    }
+    console.log(product);
+  }
   render(){
     return (
         <div id="page-wrapper">
@@ -54,7 +90,21 @@ class ProductSave extends React.Component{
                     <div className="form-group">
                         <label className="col-md-2 control-label">商品名称</label>
                         <div className="col-md-5">
-                        <input type="text" className="form-control" placeholder="请输入商品名称" />
+                        <input type="text" className="form-control"
+                         placeholder="请输入商品名称"
+                         name="name"
+                         onChange = {(e) => {this.onValueChange(e)}}
+                          />
+                        </div>
+                    </div>
+                    <div className="form-group">
+                        <label className="col-md-2 control-label">商品描述</label>
+                        <div className="col-md-5">
+                        <input type="text" className="form-control"
+                         placeholder="请输入商品描述"
+                         name="subtitle"
+                         onChange = {(e) => {this.onValueChange(e)}}
+                          />
                         </div>
                     </div>
                     <div className="form-group">
@@ -65,7 +115,11 @@ class ProductSave extends React.Component{
                         <label className="col-md-2 control-label">商品价格</label>
                         <div className="col-md-3">
                                 <div className="input-group">
-                                    <input type="text" className="form-control" placeholder="价格"/>
+                                    <input type="text" className="form-control" 
+                                    placeholder="价格"
+                                    name="price"
+                                    onChange = {(e) => {this.onValueChange(e)}}
+                                     />
                                     <span className="input-group-addon" id="basic-addon2">元</span>
                                 </div>
                         </div>
@@ -74,7 +128,11 @@ class ProductSave extends React.Component{
                         <label  className="col-md-2 control-label">商品库存</label>
                         <div className="col-md-3">
                             <div className="input-group">
-                                    <input type="text" className="form-control" placeholder="库存" />
+                                    <input type="text" className="form-control"
+                                     placeholder="库存"
+                                     name="stock"
+                                     onChange = {(e) => {this.onValueChange(e)}}
+                                      />
                                     <span className="input-group-addon" id="basic-addon2">件</span>
                            </div>
                         </div>
@@ -100,12 +158,12 @@ class ProductSave extends React.Component{
                     <div className="form-group">
                         <label  className="col-md-2 control-label">商品详情</label>
                         <div className="col-md-10">
-                              <Editor />
+                              <Editor onValueChange={(value) => {this.onEditorChange(value)}} />
                         </div>
                     </div> 
                         <div className="form-group">
                             <div className="col-sm-offset-2 col-sm-10">
-                                <button type="submit" className="btn btn-primary">提交</button>
+                                <button type="submit" className="btn btn-primary" onClick = {(e) => {this.onSubimt(e)}}>提交</button>
                             </div>
                         </div>
                     </div>
